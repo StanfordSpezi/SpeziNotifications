@@ -1,6 +1,6 @@
 <!--
                   
-This source file is part of the TemplatePackage open source project
+This source file is part of the SpeziNotifications open source project
 
 SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
 
@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
              
 -->
 
-# TemplatePackage
+# SpeziNotifications
 
 [![Build and Test](https://github.com/StanfordBDHG/SwiftPackageTemplate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/SwiftPackageTemplate/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/StanfordBDHG/SwiftPackageTemplate/branch/main/graph/badge.svg?token=X7BQYSUKOH)](https://codecov.io/gh/StanfordBDHG/SwiftPackageTemplate)
@@ -21,9 +21,7 @@ SPDX-License-Identifier: MIT
 
 The template repository contains a template Swift Package, including a continuous integration setup. 
 
-Follow these steps to customize it to your needs:
-1. Rename the Swift Package. Be sure that you update the name in the `build-and-test.yml` GitHub Action accordingly. If you have multiple targets in your Swift Package, you need to pass the name of the Swift Package followed by an `-Package` as the scheme to the GitHub Action, e.g., `StanfordProject-Package` if your Swift Package is named `StanfordProject`.
-2. If your Swift Package does not provide any user interface or does not require an iOS application environment to function, you can remove the `UITests` application from the `Tests` folder. You need to update the `build-and-test.yml` GitHub Action accordingly by removing the GitHub Action that builds and tests the application, removing the dependency from the code coverage upload step, and removing the UI test `.xresult` input from the code coverage test. 
+Follow these steps to customize it to your needs: 
 3. If your Swift Package uses UI test, you need to ...
    - ... add it to the scheme editor (*Scheme > Edit Scheme*) and your targets to the "Build" configuration and ensure that it is built before the test app target when building for the "Test" configuration. It is not required to enable building for other configurations like "Analyze", "Run", "Profile", or "Archive".
    - ... add it as a linked framework in the main target configuration (In your Xcode project settings, select your *test app target > General > Frameworks, Libraries, and Embedded Comments*).
@@ -44,12 +42,12 @@ The project can be added to your Xcode project or Swift Package using the [Swift
 
 
 ## License
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/TemplatePackage/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/SpeziNotifications/tree/main/LICENSES) for more information.
 
 
 ## Contributors
 This project is developed as part of the Stanford Byers Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/TemplatePackage/tree/main/CONTRIBUTORS.md) for a full list of all TemplatePackage contributors.
+See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/SpeziNotifications/tree/main/CONTRIBUTORS.md) for a full list of all SpeziNotifications contributors.
 
 ![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
 ![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
