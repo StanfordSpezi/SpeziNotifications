@@ -10,11 +10,11 @@ SPDX-License-Identifier: MIT
 
 -->
 
-The template repository contains a template Swift Package, including a continuous integration setup.
+Simplify User Notifications in Spezi-based applications.
 
 ## Overview
 
-Please follow the steps in the README.md file to customize the code to your needs.
+TODO
 
 ## Topics
 
