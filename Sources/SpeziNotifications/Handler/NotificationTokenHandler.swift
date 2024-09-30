@@ -6,4 +6,5 @@
 // SPDX-License-Identifier: MIT
 //
 
+// NotificationTokenHandler protocol is currently defined in Spezi. Once Spezi removes it and makes a breaking change, we can move it to this package.
 @_exported import protocol Spezi.NotificationTokenHandler

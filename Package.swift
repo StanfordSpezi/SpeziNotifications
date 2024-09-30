@@ -3,7 +3,7 @@
 //
 // This source file is part of the SpeziNotifications open source project
 //
-// SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+// SPDX-FileCopyrightText: 2024 Stanford University and the project authors (see CONTRIBUTORS.md)
 //
 // SPDX-License-Identifier: MIT
 //
@@ -14,6 +14,7 @@ import PackageDescription
 
 let package = Package(
     name: "SpeziNotifications",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
         .watchOS(.v10),
@@ -22,16 +23,34 @@ let package = Package(
         .macOS(.v14)
     ],
     products: [
-        .library(name: "SpeziNotifications", targets: ["SpeziNotifications"])
+        .library(name: "SpeziNotifications", targets: ["SpeziNotifications"]),
+        .library(name: "XCTSpeziNotifications", targets: ["XCTSpeziNotifications"]),
+        .library(name: "XCTSpeziNotificationsUI", targets: ["XCTSpeziNotificationsUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/Spezi.git", branch: "feature/application-for-swiftui")
+        .package(url: "https://github.com/StanfordSpezi/Spezi.git", branch: "feature/application-for-swiftui"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziViews.git", branch: "feature/additional-infrastructure")
     ] + swiftLintPackage(),
     targets: [
         .target(
             name: "SpeziNotifications",
             dependencies: [
                 .product(name: "Spezi", package: "Spezi")
+            ],
+            plugins: [] + swiftLintPlugin()
+        ),
+        .target(
+            name: "XCTSpeziNotifications",
+            dependencies: [
+                .target(name: "SpeziNotifications")
+            ],
+            plugins: [] + swiftLintPlugin()
+        ),
+        .target(
+            name: "XCTSpeziNotificationsUI",
+            dependencies: [
+                .target(name: "SpeziNotifications"),
+                .product(name: "SpeziViews", package: "SpeziViews")
             ],
             plugins: [] + swiftLintPlugin()
         ),

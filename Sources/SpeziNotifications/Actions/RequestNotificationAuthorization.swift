@@ -16,7 +16,7 @@ extension Spezi {
     ///
     /// Refer to ``Spezi/requestNotificationAuthorization`` for documentation.
     public struct RequestNotificationAuthorizationAction {
-        fileprivate init() {} // TODO: apply this everywhere!
+        fileprivate init() {}
 
         /// Request notification authorization.
         /// - Parameter options: The authorization options your app is requesting.
