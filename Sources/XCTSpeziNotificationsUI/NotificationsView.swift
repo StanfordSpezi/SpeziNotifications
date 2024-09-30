@@ -29,19 +29,17 @@ public struct NotificationsView: View {
     public var body: some View {
         PendingNotificationsList()
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    if requestAuthorization {
-                        AsyncButton(state: $viewState) {
-                            try await requestNotificationAuthorization(options: [.alert, .sound, .badge])
-                            await queryAuthorization()
-                            authorizationAction()
-                        } label: {
-                            Label {
-                                Text("Request Notification Authorization", bundle: .module)
-                            } icon: {
-                                Image(systemName: "alarm.waves.left.and.right.fill")
-                                    .accessibilityHidden(true)
-                            }
+                if requestAuthorization {
+                    AsyncButton(state: $viewState) {
+                        try await requestNotificationAuthorization(options: [.alert, .sound, .badge])
+                        await queryAuthorization()
+                        authorizationAction()
+                    } label: {
+                        Label {
+                            Text("Request Notification Authorization", bundle: .module)
+                        } icon: {
+                            Image(systemName: "alarm.waves.left.and.right.fill")
+                                .accessibilityHidden(true)
                         }
                     }
                 }
