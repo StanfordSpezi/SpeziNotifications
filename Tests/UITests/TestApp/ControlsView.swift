@@ -124,6 +124,7 @@ struct ControlsView: View {
 extension UNNotificationContent {
     static func content(type: String, interruption: UNNotificationInterruptionLevel = .active) -> UNNotificationContent {
         let content = UNMutableNotificationContent()
+#if !os(tvOS)
         content.title = "\(type) Notification"
         content.subtitle = "Test Notification"
         content.body = "This is a \(type.lowercased()) notification"
@@ -132,6 +133,7 @@ extension UNNotificationContent {
         content.threadIdentifier = "SpeziNotifications"
         content.interruptionLevel = interruption
         content.sound = .default
+#endif
 
         return content
     }
