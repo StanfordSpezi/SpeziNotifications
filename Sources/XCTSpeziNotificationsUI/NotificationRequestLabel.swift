@@ -22,8 +22,12 @@ struct NotificationRequestLabel: View {
             NotificationRequestView(request)
         } label: {
             VStack(alignment: .leading) {
+#if os(tvOS)
+                Text("Notification", bundle: .module)
+#else
                 Text(request.content.title)
                     .bold()
+#endif
                 if let trigger = request.trigger,
                    let nextDate = trigger.nextDate() {
                     NotificationTriggerLabel(nextDate)

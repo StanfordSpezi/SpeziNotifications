@@ -20,6 +20,7 @@ extension XCUIApplication {
     
     /// Confirm the notification authorization dialog.
     /// - Parameter action: The action to confirm the alert with.
+    @available(tvOS, unavailable)
     public func confirmNotificationAuthorization(action: NotificationAuthorizationAction = .allow) {
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
 

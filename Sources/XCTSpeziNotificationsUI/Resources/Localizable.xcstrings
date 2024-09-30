@@ -11,17 +11,6 @@
         }
       }
     },
-    "active" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "active"
-          }
-        }
-      }
-    },
     "Body" : {
       "localizations" : {
         "en" : {
@@ -58,17 +47,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Content"
-          }
-        }
-      }
-    },
-    "critical" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "critical"
           }
         }
       }
@@ -173,13 +151,12 @@
         }
       }
     },
-    "passive" : {
-      "extractionState" : "stale",
+    "Notification" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "passive"
+            "value" : "Notification"
           }
         }
       }
@@ -215,7 +192,14 @@
       }
     },
     "Request Notification Authorization" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request Notification Authorization"
+          }
+        }
+      }
     },
     "Sound" : {
       "localizations" : {
@@ -243,17 +227,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thread"
-          }
-        }
-      }
-    },
-    "timeSensitive" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "timeSensitive"
           }
         }
       }
@@ -294,17 +267,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unknown"
-          }
-        }
-      }
-    },
-    "unknown(%llu)" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "unknown(%llu)"
           }
         }
       }

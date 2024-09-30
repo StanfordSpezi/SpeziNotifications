@@ -12,3 +12,5 @@ builder:
     - platform: ios
       documentation_targets:
       - SpeziNotifications
+      - XCTSpeziNotifications
+      - XCTSpeziNotificationsUI

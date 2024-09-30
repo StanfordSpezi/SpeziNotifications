@@ -36,7 +36,12 @@ public struct NotificationsView: View {
                             await queryAuthorization()
                             authorizationAction()
                         } label: {
-                            Label("Request Notification Authorization", systemImage: "alarm.waves.left.and.right.fill")
+                            Label {
+                                Text("Request Notification Authorization", bundle: .module)
+                            } icon: {
+                                Image(systemName: "alarm.waves.left.and.right.fill")
+                                    .accessibilityHidden(true)
+                            }
                         }
                     }
                 }

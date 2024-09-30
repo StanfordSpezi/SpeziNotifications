@@ -20,27 +20,32 @@ public struct NotificationRequestView: View {
 
     public var body: some View {
         List {
-            content
-
-            delivery
-
-            trigger
-
             Section {
                 LabeledContent {
                     Text(request.identifier)
                 } label: {
                     Text("Identifier", bundle: .module)
                 }
-                    .accessibilityElement(children: .combine)
+                .accessibilityElement(children: .combine)
             }
+
+#if !os(tvOS)
+            content
+#endif
+
+            delivery
+
+            trigger
         }
+#if !os(tvOS)
             .navigationTitle(request.content.title)
 #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
 #endif
+#endif
     }
 
+    @available(tvOS, unavailable)
     @ViewBuilder private var content: some View {
         Section { // swiftlint:disable:this closure_body_length
             LabeledContent {
@@ -90,12 +95,14 @@ public struct NotificationRequestView: View {
 
     @ViewBuilder private var delivery: some View {
         Section {
+#if !os(tvOS)
             LabeledContent {
                 Text(request.content.sound != nil ? "Yes" : "No", bundle: .module)
             } label: {
                 Text("Sound", bundle: .module)
             }
                 .accessibilityElement(children: .combine)
+#endif
 
             LabeledContent {
                 Text(request.content.interruptionLevel.description)
