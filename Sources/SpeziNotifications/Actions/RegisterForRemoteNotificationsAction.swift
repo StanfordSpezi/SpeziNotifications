@@ -53,7 +53,7 @@ extension Spezi {
     ///     refer to the [Registering your app with APNs](https://developer.apple.com/documentation/usernotifications/registering-your-app-with-apns)
     ///     article.
     ///
-    /// Below is a short code example on how to use this action within your ``Module``.
+    /// Below is a short code example on how to use this action within your [`Module`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/module).
     ///
     /// - Warning: Registering for Remote Notifications on Simulator devices might not be possible if your are not signed into an Apple ID on the host machine.
     ///     The method might throw a [`TimeoutError`](https://swiftpackageindex.com/stanfordspezi/spezifoundation/documentation/spezifoundation/timeouterror)
@@ -107,7 +107,7 @@ extension EnvironmentValues {
     ///     refer to the [Registering your app with APNs](https://developer.apple.com/documentation/usernotifications/registering-your-app-with-apns)
     ///     article.
     ///
-    /// Below is a short code example on how to use this action within your ``Module``.
+    /// Below is a short code example on how to use this action within your [`Module`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/module).
     ///
     /// - Warning: Registering for Remote Notifications on Simulator devices might not be possible if your are not signed into an Apple ID on the host machine.
     ///     The method might throw a [`TimeoutError`](https://swiftpackageindex.com/stanfordspezi/spezifoundation/documentation/spezifoundation/timeouterror)

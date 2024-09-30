@@ -7,8 +7,8 @@
 //
 
 import Spezi
-import SwiftUI
 import SpeziNotifications
+import SwiftUI
 import XCTSpeziNotificationsUI
 
 

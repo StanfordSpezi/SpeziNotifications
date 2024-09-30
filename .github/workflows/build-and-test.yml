@@ -22,14 +22,14 @@ jobs:
     name: Build and Test Swift Package iOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      scheme: SpeziNotifications
+      scheme: SpeziNotifications-Package
       resultBundle: SpeziNotifications-iOS.xcresult
       artifactname: SpeziNotifications-iOS.xcresult
   packagewatchos:
     name: Build and Test Swift Package watchOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      scheme: SpeziNotifications
+      scheme: SpeziNotifications-Package
       destination: 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)'
       resultBundle: SpeziNotifications-watchOS.xcresult
       artifactname: SpeziNotifications-watchOS.xcresult
@@ -37,7 +37,7 @@ jobs:
     name: Build and Test Swift Package visionOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      scheme: SpeziNotifications
+      scheme: SpeziNotifications-Package
       destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
       resultBundle: SpeziNotifications-visionOS.xcresult
       artifactname: SpeziNotifications-visionOS.xcresult
@@ -45,7 +45,7 @@ jobs:
     name: Build and Test Swift Package tvOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      scheme: SpeziNotifications
+      scheme: SpeziNotifications-Package
       resultBundle: SpeziNotifications-tvOS.xcresult
       destination: 'platform=tvOS Simulator,name=Apple TV 4K (3rd generation)'
       artifactname: SpeziNotifications-tvOS.xcresult
@@ -53,7 +53,7 @@ jobs:
     name: Build and Test Swift Package macOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
     with:
-      scheme: SpeziNotifications
+      scheme: SpeziNotifications-Package
       resultBundle: SpeziNotifications-macOS.xcresult
       destination: 'platform=macOS,arch=arm64'
       artifactname: SpeziNotifications-macOS.xcresult
@@ -65,25 +65,6 @@ jobs:
       scheme: TestApp
       resultBundle: TestApp-iOS.xcresult
       artifactname: TestApp-iOS.xcresult
-  ipados:
-    name: Build and Test iPadOS
-    uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-    with:
-      path: 'Tests/UITests'
-      scheme: TestApp
-      destination: 'platform=iOS Simulator,name=iPad Air 13-inch (M2)'
-      resultBundle: TestApp-iPadOS.xcresult
-      artifactname: TestApp-iPadOS.xcresult
-  watchos:
-    name: Build and Test watchOS
-    uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-    with:
-      runsonlabels: '["macOS", "self-hosted"]'
-      path: 'Tests/UITests'
-      scheme: TestAppWatchApp
-      destination: 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)'
-      resultBundle: TestApp-watchOS.xcresult
-      artifactname: TestApp-watchOS.xcresult
   visionos:
     name: Build and Test visionOS
     uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
@@ -94,20 +75,11 @@ jobs:
       destination: 'platform=visionOS Simulator,name=Apple Vision Pro'
       resultBundle: TestApp-visionOS.xcresult
       artifactname: TestApp-visionOS.xcresult
-  tvos:
-    name: Build and Test tvOS
-    uses: StanfordSpezi/.github/.github/workflows/xcodebuild-or-fastlane.yml@v2
-    with:
-      path: 'Tests/UITests'
-      scheme: TestApp
-      destination: 'platform=tvOS Simulator,name=Apple TV 4K (3rd generation)'
-      resultBundle: TestApp-tvOS.xcresult
-      artifactname: TestApp-tvOS.xcresult
   uploadcoveragereport:
     name: Upload Coverage Report
-    needs: [packageios, packagewatchos, packagevisionos, packagetvos, packagemacos, ios, ipados, watchos, visionos, tvos]
+    needs: [packageios, packagewatchos, packagevisionos, packagetvos, packagemacos, ios, visionos]
     uses: StanfordSpezi/.github/.github/workflows/create-and-upload-coverage-report.yml@v2
     with:
-      coveragereports: SpeziNotifications-iOS.xcresult SpeziNotifications-watchOS.xcresult SpeziNotifications-visionOS.xcresult SpeziNotifications-tvOS.xcresult SpeziNotifications-macOS.xcresult TestApp-iOS.xcresult TestApp-iPadOS.xcresult TestApp-watchOS.xcresult TestApp-visionOS.xcresult TestApp-tvOS.xcresult
+      coveragereports: SpeziNotifications-iOS.xcresult SpeziNotifications-watchOS.xcresult SpeziNotifications-visionOS.xcresult SpeziNotifications-tvOS.xcresult SpeziNotifications-macOS.xcresult TestApp-iOS.xcresult TestApp-visionOS.xcresult
     secrets:
       token: ${{ secrets.CODECOV_TOKEN }}
