@@ -34,7 +34,6 @@ extension XCUIApplication {
         alert.buttons[action.rawValue].tap()
 #elseif os(visionOS)
         let notifications = XCUIApplication(bundleIdentifier: "com.apple.RealityNotifications")
-        print(notifications.debugDescription) // TODO: remove
         XCTAssert(notifications.scrollViews.staticTexts.element(matching: predicate).waitForExistence(timeout: 5.0))
         XCTAssert(notifications.buttons[action.rawValue].exists)
         notifications.buttons[action.rawValue].tap()
