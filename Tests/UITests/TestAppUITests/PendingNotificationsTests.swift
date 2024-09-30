@@ -31,8 +31,13 @@ final class PendingNotificationsTests: XCTestCase {
 
         XCTAssert(app.staticTexts["Authorization, provisional"].waitForExistence(timeout: 0.5))
 
+        #if os(visionOS)
+        XCTAssert(app.buttons["Notifications"].exists)
+        app.buttons["Notifications"].firstMatch.tap()
+        #else
         XCTAssert(app.tabBars.buttons["Notifications"].exists)
         app.tabBars.buttons["Notifications"].tap()
+        #endif
 
         XCTAssert(app.navigationBars.staticTexts["Pending Notifications"].waitForExistence(timeout: 2.0))
 

@@ -39,6 +39,7 @@ extension XCUIApplication {
         nextTriggerExistenceTimeout: TimeInterval = 60
     ) {
         XCTAssert(navigationBars.staticTexts[title].waitForExistence(timeout: 2.0))
+        XCTAssert(staticTexts["Identifier, \(identifier)"].exists)
         XCTAssert(staticTexts["Title, \(title)"].exists)
         if let subtitle {
             XCTAssert(staticTexts["Subtitle, \(subtitle)"].exists)
@@ -54,11 +55,14 @@ extension XCUIApplication {
         XCTAssert(staticTexts["Sound, \(sound ? "Yes" : "No")"].exists)
         XCTAssert(staticTexts["Interruption, \(interruption.description)"].exists)
 
+#if os(visionOS)
+        staticTexts["Interruption, \(interruption.description)"].swipeUp(velocity: .fast)
+#endif
+
         if let type {
             XCTAssert(staticTexts["Type, \(type)"].exists)
         }
 
-        XCTAssert(staticTexts["Identifier, \(identifier)"].exists)
 
         if let nextTrigger {
             XCTAssert(staticTexts["Next Trigger, \(nextTrigger)"].waitForExistence(timeout: nextTriggerExistenceTimeout))
