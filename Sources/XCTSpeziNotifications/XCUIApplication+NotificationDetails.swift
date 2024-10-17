@@ -26,7 +26,7 @@ extension XCUIApplication {
     ///   - nextTrigger: The next trigger label to assert.
     ///   - nextTriggerExistenceTimeout: The time to await for the trigger label to appear.
     public func assertNotificationDetails( // swiftlint:disable:this function_default_parameter_at_end
-        identifier: String,
+        identifier: String? = nil,
         title: String,
         subtitle: String? = nil,
         body: String,
@@ -39,7 +39,9 @@ extension XCUIApplication {
         nextTriggerExistenceTimeout: TimeInterval = 60
     ) {
         XCTAssert(navigationBars.staticTexts[title].waitForExistence(timeout: 2.0))
-        XCTAssert(staticTexts["Identifier, \(identifier)"].exists)
+        if let identifier {
+            XCTAssert(staticTexts["Identifier, \(identifier)"].exists)
+        }
         XCTAssert(staticTexts["Title, \(title)"].exists)
         if let subtitle {
             XCTAssert(staticTexts["Subtitle, \(subtitle)"].exists)
