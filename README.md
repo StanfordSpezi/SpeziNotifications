@@ -12,6 +12,7 @@ SPDX-License-Identifier: MIT
 
 [![Build and Test](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/StanfordSpezi/SpeziNotifications/graph/badge.svg?token=dWaDzUBFoV)](https://codecov.io/gh/StanfordSpezi/SpeziNotifications)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14003714.svg)](https://doi.org/10.5281/zenodo.14003714)
 
 Simplify User Notifications in Spezi-based applications.
 
