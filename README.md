@@ -13,6 +13,8 @@ SPDX-License-Identifier: MIT
 [![Build and Test](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml)
 [![codecov](https://codecov.io/gh/StanfordSpezi/SpeziNotifications/graph/badge.svg?token=dWaDzUBFoV)](https://codecov.io/gh/StanfordSpezi/SpeziNotifications)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14003714.svg)](https://doi.org/10.5281/zenodo.14003714)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordSpezi%2FSpeziNotifications%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/StanfordSpezi/SpeziNotifications)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordSpezi%2FSpeziNotifications%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/StanfordSpezi/SpeziNotifications)
 
 Simplify User Notifications in Spezi-based applications.
 
