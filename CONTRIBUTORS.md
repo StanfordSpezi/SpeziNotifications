@@ -1,17 +1,17 @@
 <!--
                   
 #
-# This source file is part of the TemplatePackage open source project
+# This source file is part of the SpeziNotifications open source project
 #
-# SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+# SPDX-FileCopyrightText: 2024 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
 # SPDX-License-Identifier: MIT
 # 
              
 -->
 
-TemplatePackage contributors
+SpeziNotifications contributors
 ====================
 
 * [Paul Schmiedmayer](https://github.com/PSchmiedmayer)
-* [Vishnu Ravi](https://github.com/vishnuravi)
+* [Andreas Bauer](https://github.com/Supereg)

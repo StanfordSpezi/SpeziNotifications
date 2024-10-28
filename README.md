@@ -1,55 +1,126 @@
 <!--
                   
-This source file is part of the TemplatePackage open source project
+This source file is part of the SpeziNotifications open source project
 
-SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+SPDX-FileCopyrightText: 2024 Stanford University and the project authors (see CONTRIBUTORS.md)
 
 SPDX-License-Identifier: MIT
              
 -->
 
-# TemplatePackage
+# SpeziNotifications
 
-[![Build and Test](https://github.com/StanfordBDHG/SwiftPackageTemplate/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordBDHG/SwiftPackageTemplate/actions/workflows/build-and-test.yml)
-[![codecov](https://codecov.io/gh/StanfordBDHG/SwiftPackageTemplate/branch/main/graph/badge.svg?token=X7BQYSUKOH)](https://codecov.io/gh/StanfordBDHG/SwiftPackageTemplate)
-[![DOI](https://zenodo.org/badge/573230182.svg)](https://zenodo.org/badge/latestdoi/573230182)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordBDHG%2FSwiftPackageTemplate%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/StanfordBDHG/SwiftPackageTemplate)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FStanfordBDHG%2FSwiftPackageTemplate%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/StanfordBDHG/SwiftPackageTemplate)
+[![Build and Test](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/StanfordSpezi/SpeziNotifications/actions/workflows/build-and-test.yml)
+[![codecov](https://codecov.io/gh/StanfordSpezi/SpeziNotifications/graph/badge.svg?token=dWaDzUBFoV)](https://codecov.io/gh/StanfordSpezi/SpeziNotifications)
+
+Simplify User Notifications in Spezi-based applications.
+
+## Overview
+ 
+SpeziNotifications simplifies interaction with user notifications by adding additional actions to the Environment of SwiftUI Views and
+Spezi Modules.
+
+### Schedule Notifications
+
+You can use the [`Notifications`]((https://swiftpackageindex.com/stanfordspezi/spezinotifications/documentation/spezinotifications/notifications))
+module to interact with user notifications within your application. You can either define it as a dependency
+of your Spezi [`Module`](https://swiftpackageindex.com/stanfordspezi/spezi/documentation/spezi/module)
+or retrieve it from the environment using the [`@Environment`](https://developer.apple.com/documentation/swiftui/environment)
+property wrapper in your SwiftUI View.
+
+The code example below schedules a notification request, accessing the `Notifications` module from within the custom `MyNotifications` module.
+
+```swift
+import Spezi
+import UserNotifications
 
 
-## How To Use This Template
+final class MyNotifications: Module {
+    @Dependency(Notifications.self)
+    private var notifications
 
-The template repository contains a template Swift Package, including a continuous integration setup. 
+    @Application(\.notificationSettings)
+    private var settings
 
-Follow these steps to customize it to your needs:
-1. Rename the Swift Package. Be sure that you update the name in the `build-and-test.yml` GitHub Action accordingly. If you have multiple targets in your Swift Package, you need to pass the name of the Swift Package followed by an `-Package` as the scheme to the GitHub Action, e.g., `StanfordProject-Package` if your Swift Package is named `StanfordProject`.
-2. If your Swift Package does not provide any user interface or does not require an iOS application environment to function, you can remove the `UITests` application from the `Tests` folder. You need to update the `build-and-test.yml` GitHub Action accordingly by removing the GitHub Action that builds and tests the application, removing the dependency from the code coverage upload step, and removing the UI test `.xresult` input from the code coverage test. 
-3. If your Swift Package uses UI test, you need to ...
-   - ... add it to the scheme editor (*Scheme > Edit Scheme*) and your targets to the "Build" configuration and ensure that it is built before the test app target when building for the "Test" configuration. It is not required to enable building for other configurations like "Analyze", "Run", "Profile", or "Archive".
-   - ... add it as a linked framework in the main target configuration (In your Xcode project settings, select your *test app target > General > Frameworks, Libraries, and Embedded Comments*).
-   - ... add ensure that the targets are all added in the code coverage settings of your .xctestplan file in the Xcode Project (*Shared Settings > Code Coverage > Code Coverage*).
-4. You will either need to add the [CodeCov GitHub App](https://github.com/apps/codecov) or add a codecov.io token to your [GitHub Actions Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-an-environment) following the instructions of the [Codecov GitHub Action](https://github.com/marketplace/actions/codecov#usage). The StanfordBDHG organization already has the [CodeCov GitHub App](https://github.com/apps/codecov) installed. If you do not want to cover test coverage data, you can remove the code coverage job in the `build-and-test.yml` GitHub Action.
-5. Adjust this README.md to describe your project and adjust the badges at the top to point to the correct GitHub Action of your repository and Codecov badge.
-6. The Swift Package template includes a Swift Package Index configuration file to automatically build the package and [host the documentation on the Swift Package Index website](https://blog.swiftpackageindex.com/posts/auto-generating-auto-hosting-and-auto-updating-docc-documentation/). Adjust the `.spi.yml` file to include all targets that you want to build documentation for. You can follow the [instructions of the Swift Package Index](https://swiftpackageindex.com/add-a-package) to include your Swift Package in the Swift Package Index. You can link to the [API documentation](https://swiftpackageindex.com/StanfordBDHG/SwiftPackageTemplate/documentation) from your README file.
-7. Adjust the CITATION.cff file to amend information about the new Swift Package ([learn more about CITATION files on GitHub](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-citation-files)) and [register the Swift Package on Zenodo](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content). 
+    func scheduleAppointmentReminder() async throws {
+        let status = await settings().authorizationStatus
+        guard status == .authorized || status == .provisional else {
+            return // no authorization to schedule notification
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Your Appointment"
+        content.body = "Your appointment is in 3 hours"
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3 * 60, repeats: false)
+
+        let request = UNNotificationRequest(identifier: "3-hour-reminder", content: content, trigger: trigger)
+
+        try await notifications.add(request: request)
+    }
+}
+```
+
+### Requesting Authorization in SwiftUI
+
+The Notification module and notification-related actions are also available in the SwiftUI Environment. The code example below creates a simple
+notification authorization onboarding view that (1) determines the current authorization status and (2) request notification authorization
+when the user taps the button.
 
 
-## Installation
+```swift
+import SpeziNotifications
+import SpeziViews
 
-The project can be added to your Xcode project or Swift Package using the [Swift Package Manager](https://github.com/apple/swift-package-manager).
+struct NotificationOnboarding: View {
+    @Environment(\.notificationSettings)
+    private var notificationSettings
+    @Environment(\.requestNotificationAuthorization)
+    private var requestNotificationAuthorization
 
-**Xcode:** For an Xcode project, follow the instructions on [adding package dependencies to your app](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app).
+    @State private var viewState: ViewState = .idle
+    @State private var notificationsAuthorized = false
 
-**Swift Package:** You can follow the [Swift Package Manager documentation about defining dependencies](https://github.com/apple/swift-package-manager/blob/main/Documentation/Usage.md#defining-dependencies) to add this project as a dependency to your Swift Package.
+    var body: some View {
+        VStack {
+            // ...
+            if notificationsAuthorized {
+                Button("Continue") {
+                    // show next view ...
+                }
+            } else {
+                AsyncButton("Allow Notifications", state: $viewState) {
+                    try await requestNotificationAuthorization(options: [.alert, .badge, .sound])
+                }
+                    .environment(\.defaultErrorDescription, "Failed to request notification authorization.")
+            }
+        }
+            .viewStateAlert(state: $viewState)
+            .task {
+                notificationsAuthorized = await notificationSettings().authorizationStatus == .authorized
+            }
+    }
+}
+```
 
+> [!IMPORTANT] 
+> The example above uses the [`AsyncButton`](https://swiftpackageindex.com/stanfordspezi/speziviews/documentation/speziviews/asyncbutton)
+> and the [`ViewState`](https://swiftpackageindex.com/stanfordspezi/speziviews/documentation/speziviews/viewstate) model from SpeziViews to more
+> easily manage the state of asynchronous actions and handle erroneous conditions.
+
+## Setup
+
+You need to add the SpeziNotifications Swift package to
+[your app in Xcode](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app#) or
+[Swift package](https://developer.apple.com/documentation/xcode/creating-a-standalone-swift-package-with-xcode#Add-a-dependency-on-another-Swift-package).
 
 ## License
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/TemplatePackage/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordSpezi/SpeziNotifications/tree/main/LICENSES) for more information.
 
 
 ## Contributors
-This project is developed as part of the Stanford Byers Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/TemplatePackage/tree/main/CONTRIBUTORS.md) for a full list of all TemplatePackage contributors.
+This project is developed as part of the Stanford Mussallem Center for Biodesign at Stanford University.
+See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/StanfordSpezi/tree/main/CONTRIBUTORS.md) for a full list of all SpeziNotifications contributors.
 
-![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
-![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
+![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
+![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
