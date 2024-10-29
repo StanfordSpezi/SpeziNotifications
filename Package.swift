@@ -28,8 +28,8 @@ let package = Package(
         .library(name: "XCTSpeziNotificationsUI", targets: ["XCTSpeziNotificationsUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/Spezi.git", branch: "feature/application-for-swiftui"),
-        .package(url: "https://github.com/StanfordSpezi/SpeziViews.git", branch: "feature/additional-infrastructure")
+        .package(url: "https://github.com/StanfordSpezi/Spezi.git", from: "1.8.0"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziViews.git", from: "1.7.0")
     ] + swiftLintPackage(),
     targets: [
         .target(
