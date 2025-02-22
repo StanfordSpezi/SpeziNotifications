@@ -37,6 +37,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Spezi", package: "Spezi")
             ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")],
             plugins: [] + swiftLintPlugin()
         ),
         .target(
@@ -44,6 +45,7 @@ let package = Package(
             dependencies: [
                 .target(name: "SpeziNotifications")
             ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")],
             plugins: [] + swiftLintPlugin()
         ),
         .target(
@@ -52,6 +54,7 @@ let package = Package(
                 .target(name: "SpeziNotifications"),
                 .product(name: "SpeziViews", package: "SpeziViews")
             ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")],
             plugins: [] + swiftLintPlugin()
         ),
         .testTarget(
@@ -61,6 +64,7 @@ let package = Package(
                 .product(name: "Spezi", package: "Spezi"),
                 .product(name: "XCTSpezi", package: "Spezi")
             ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")],
             plugins: [] + swiftLintPlugin()
         )
     ]
