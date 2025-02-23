@@ -18,15 +18,15 @@ final class PendingNotificationsTests: XCTestCase {
     }
 
     @MainActor
-    func testPendingNotifications() {
+    func testPendingNotifications() { // swiftlint:disable:this function_body_length
         func navigateToTab(_ tabName: String, line: UInt = #line) {
             #if os(visionOS)
-            XCTAssert(app.buttons[tabName].exists)
+            XCTAssert(app.buttons[tabName].exists, line: line)
             app.buttons[tabName].firstMatch.tap()
             usleep(500000)
             app.buttons[tabName].firstMatch.tap()
             #else
-            XCTAssert(app.tabBars.buttons[tabName].exists)
+            XCTAssert(app.tabBars.buttons[tabName].exists, line: line)
             app.tabBars.buttons[tabName].tap()
             usleep(500000)
             app.tabBars.buttons[tabName].tap()
