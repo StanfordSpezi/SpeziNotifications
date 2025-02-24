@@ -53,6 +53,8 @@ extension XCUIApplication {
         if let thread {
             XCTAssert(staticTexts["Thread, \(thread)"].exists)
         }
+        
+        swipeUp()
 
         XCTAssert(staticTexts["Sound, \(sound ? "Yes" : "No")"].exists)
         XCTAssert(staticTexts["Interruption, \(interruption.description)"].exists)
@@ -64,7 +66,6 @@ extension XCUIApplication {
         if let type {
             XCTAssert(staticTexts["Type, \(type)"].exists)
         }
-
 
         if let nextTrigger {
             XCTAssert(staticTexts["Next Trigger, \(nextTrigger)"].waitForExistence(timeout: nextTriggerExistenceTimeout))
