@@ -54,14 +54,16 @@ extension XCUIApplication {
             XCTAssert(staticTexts["Thread, \(thread)"].exists)
         }
         
+        #if !os(tvOS)
         swipeUp()
+        #endif
 
         XCTAssert(staticTexts["Sound, \(sound ? "Yes" : "No")"].exists)
         XCTAssert(staticTexts["Interruption, \(interruption.description)"].exists)
 
-#if os(visionOS)
+        #if os(visionOS)
         staticTexts["Interruption, \(interruption.description)"].swipeUp(velocity: .fast)
-#endif
+        #endif
 
         if let type {
             XCTAssert(staticTexts["Type, \(type)"].exists)
