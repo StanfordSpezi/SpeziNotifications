@@ -14,6 +14,8 @@ import Spezi
 ///
 /// This module provides some easy to use API to schedule and manage local notifications.
 ///
+/// - Note: The `Notification` module is not functional during unit tests; in this case all operations will silently fail.
+///
 /// ## Topics
 ///
 /// ### Configuration
