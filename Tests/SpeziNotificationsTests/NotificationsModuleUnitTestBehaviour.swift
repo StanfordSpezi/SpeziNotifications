@@ -20,8 +20,8 @@ struct NotificationsModuleUnitTestBehaviour {
         try await module.setBadgeCount(12)
         try await module.add(request: UNNotificationRequest(identifier: "abc", content: UNMutableNotificationContent(), trigger: nil))
         #expect(try await module.remainingNotificationLimit() == 0)
-        #expect(await module.pendingNotificationRequests() == [])
-        #expect(await module.deliveredNotifications() == [])
+        #expect(await module.pendingNotificationRequests().isEmpty)
+        #expect(await module.deliveredNotifications().isEmpty)
         await module.add(categories: [UNNotificationCategory(identifier: "abc", actions: [], intentIdentifiers: [])])
         await module.removePendingNotificationRequests(where: { _ in true })
     }
