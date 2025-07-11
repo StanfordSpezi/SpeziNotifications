@@ -102,7 +102,7 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
             return
         }
         if let mutableContent = request.content.mutableCopy() as? UNMutableNotificationContent {
-            mutableContent.userInfo[Self.notificationContentUserInfoKeyScheduledDate] = Date()
+            mutableContent.setUserInfoValue(Date(), for: Self.notificationContentUserInfoKeyScheduledDate)
             try await notificationCenter.add(UNNotificationRequest(
                 identifier: request.identifier,
                 content: mutableContent,
@@ -189,3 +189,25 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
         notificationCenter.removePendingNotificationRequests(withIdentifiers: identifiers)
     }
 }
+
+
+// MARK: Utils
+
+extension UNNotificationContent {
+    package func userInfoValue<T>(for key: String, as _: T.Type) -> T? {
+        #if !os(tvOS)
+        userInfo[key] as? T
+        #else
+        nil
+        #endif
+    }
+}
+
+extension UNMutableNotificationContent {
+    package func setUserInfoValue(_ value: some Any, for key: String) {
+        #if !os(tvOS)
+        userInfo[key] = value
+        #endif
+    }
+}
+
