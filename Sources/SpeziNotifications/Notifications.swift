@@ -194,6 +194,10 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
 // MARK: Utils
 
 extension UNNotificationContent {
+    @objc package var scheduledDate: Date? {
+        userInfoValue(for: Notifications.notificationContentUserInfoKeyScheduledDate, as: Date.self)
+    }
+    
     package func userInfoValue<T>(for key: String, as _: T.Type) -> T? {
         #if !os(tvOS)
         userInfo[key] as? T
@@ -201,20 +205,10 @@ extension UNNotificationContent {
         nil
         #endif
     }
-    
-    @objc package var scheduledDate: Date? {
-        userInfoValue(for: Notifications.notificationContentUserInfoKeyScheduledDate, as: Date.self)
-    }
 }
 
 extension UNMutableNotificationContent {
-    package func setUserInfoValue(_ value: some Any, for key: String) {
-        #if !os(tvOS)
-        userInfo[key] = value
-        #endif
-    }
-    
-    @objc override package var scheduledDate: Date? {
+    @objc override package var scheduledDate: Date? { // swiftlint:disable:this override_in_extension
         get {
             super.scheduledDate
         }
@@ -222,5 +216,10 @@ extension UNMutableNotificationContent {
             setUserInfoValue(newValue, for: Notifications.notificationContentUserInfoKeyScheduledDate)
         }
     }
+    
+    package func setUserInfoValue(_ value: some Any, for key: String) {
+        #if !os(tvOS)
+        userInfo[key] = value
+        #endif
+    }
 }
-
