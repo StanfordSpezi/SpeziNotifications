@@ -44,7 +44,9 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
     public static let pendingNotificationsLimit = 64
     
     /// The `Date` when the notification request was scheduled.
-    public static let notificationContentUserInfoKeyScheduleDate = "edu.stanford.SpeziNotifications.notificationScheduleDate"
+    ///
+    /// - Note: This is the `Date` when the request was registered with the notification center, not the `Date` for which the request was scheduled.
+    public static let notificationContentUserInfoKeyScheduledDate = "edu.stanford.SpeziNotifications.notificationScheduledDate"
     // swiftlint:disable:previous identifier_name
 
     @Application(\.notificationSettings)
@@ -100,7 +102,7 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
             return
         }
         if let mutableContent = request.content.mutableCopy() as? UNMutableNotificationContent {
-            mutableContent.userInfo[Self.notificationContentUserInfoKeyScheduleDate] = Date()
+            mutableContent.userInfo[Self.notificationContentUserInfoKeyScheduledDate] = Date()
             try await notificationCenter.add(UNNotificationRequest(
                 identifier: request.identifier,
                 content: mutableContent,
