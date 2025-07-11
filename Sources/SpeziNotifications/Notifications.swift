@@ -42,6 +42,10 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
     ///
     /// The limit is `64`.
     public static let pendingNotificationsLimit = 64
+    
+    /// The `Date` when the notification request was scheduled.
+    public static let notificationContentUserInfoKeyScheduleDate = "edu.stanford.SpeziNotifications.notificationScheduleDate"
+    // swiftlint:disable:previous identifier_name
 
     @Application(\.notificationSettings)
     public var notificationSettings
@@ -95,7 +99,16 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
         guard let notificationCenter else {
             return
         }
-        try await notificationCenter.add(request)
+        if let mutableContent = request.content.mutableCopy() as? UNMutableNotificationContent {
+            mutableContent.userInfo[Self.notificationContentUserInfoKeyScheduleDate] = Date()
+            try await notificationCenter.add(UNNotificationRequest(
+                identifier: request.identifier,
+                content: mutableContent,
+                trigger: request.trigger
+            ))
+        } else {
+            try await notificationCenter.add(request)
+        }
     }
 
     /// Retrieve the amount of notifications that can be scheduled for the app.
