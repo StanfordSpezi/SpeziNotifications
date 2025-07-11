@@ -102,7 +102,7 @@ public final class Notifications: Module, DefaultInitializable, EnvironmentAcces
             return
         }
         if let mutableContent = request.content.mutableCopy() as? UNMutableNotificationContent {
-            mutableContent.setUserInfoValue(Date(), for: Self.notificationContentUserInfoKeyScheduledDate)
+            mutableContent.scheduledDate = .now
             try await notificationCenter.add(UNNotificationRequest(
                 identifier: request.identifier,
                 content: mutableContent,
@@ -201,6 +201,10 @@ extension UNNotificationContent {
         nil
         #endif
     }
+    
+    @objc package var scheduledDate: Date? {
+        userInfoValue(for: Notifications.notificationContentUserInfoKeyScheduledDate, as: Date.self)
+    }
 }
 
 extension UNMutableNotificationContent {
@@ -208,6 +212,15 @@ extension UNMutableNotificationContent {
         #if !os(tvOS)
         userInfo[key] = value
         #endif
+    }
+    
+    @objc override package var scheduledDate: Date? {
+        get {
+            super.scheduledDate
+        }
+        set {
+            setUserInfoValue(newValue, for: Notifications.notificationContentUserInfoKeyScheduledDate)
+        }
     }
 }
 

@@ -47,14 +47,14 @@ extension UNNotificationRequest {
             // this happens because the trigger itself exists completely independent of the
             // notification request it belongs to. additionally, since there's no way to obtain
             // the time a notification request was scheduled, we need to keep track of this manually.
-            if let scheduledDate = content.userInfoValue(for: Notifications.notificationContentUserInfoKeyScheduledDate, as: Date.self) {
+            if let scheduledDate = content.scheduledDate {
                 scheduledDate.addingTimeInterval(trigger.timeInterval)
             } else {
                 nil
             }
         } else if trigger == nil {
             // if there is no trigger, the notification gets delivered immediately; in this case the trigger date would equal the schedule date
-            content.userInfoValue(for: Notifications.notificationContentUserInfoKeyScheduledDate, as: Date.self)
+            content.scheduledDate
         } else {
             // otherwise, we cannot obtain a trigger date.
             nil
