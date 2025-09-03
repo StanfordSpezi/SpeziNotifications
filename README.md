@@ -123,7 +123,7 @@ This project is licensed under the MIT License. See [Licenses](https://github.co
 
 ## Contributors
 This project is developed as part of the Stanford Mussallem Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/StanfordSpezi/tree/main/CONTRIBUTORS.md) for a full list of all SpeziNotifications contributors.
+See [CONTRIBUTORS.md](https://github.com/StanfordSpezi/SpeziNotifications/tree/main/CONTRIBUTORS.md) for a full list of all SpeziNotifications contributors.
 
 ![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
 ![Stanford Mussallem Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
