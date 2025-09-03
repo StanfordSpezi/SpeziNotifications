@@ -54,6 +54,7 @@ let package = Package(
                 .target(name: "SpeziNotifications"),
                 .product(name: "SpeziViews", package: "SpeziViews")
             ],
+            resources: [.process("Resources")],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")],
             plugins: [] + swiftLintPlugin()
         ),
