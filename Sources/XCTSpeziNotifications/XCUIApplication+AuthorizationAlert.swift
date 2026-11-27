@@ -37,19 +37,18 @@ extension XCUIApplication {
         timeout: TimeInterval = 5.0,
         requireAlert: Bool = true
     ) -> Bool {
+#if os(iOS) || os(visionOS)
         let predicate = NSPredicate(format: "label CONTAINS 'Would Like to Send You Notifications'")
 
-#if os(iOS)
+    #if os(iOS)
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let alert = springboard.alerts.element(matching: predicate)
         let button = alert.buttons[action.rawValue]
-#elseif os(visionOS)
+    #else
         let notifications = XCUIApplication(bundleIdentifier: "com.apple.RealityNotifications")
         let alert = notifications.scrollViews.staticTexts.element(matching: predicate)
         let button = notifications.buttons[action.rawValue]
-#else
-        preconditionFailure("Unsupported platform")
-#endif
+    #endif
 
         guard alert.waitForExistence(timeout: timeout) else {
             if requireAlert {
@@ -62,5 +61,8 @@ extension XCUIApplication {
         button.tap()
         XCTAssert(alert.waitForNonExistence(timeout: 5.0))
         return true
+#else
+        preconditionFailure("Unsupported platform")
+#endif
     }
 }
