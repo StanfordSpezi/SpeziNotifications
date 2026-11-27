@@ -17,7 +17,7 @@ SPDX-License-Identifier: MIT
 ### Notification Authorization
 
 - ``XCTest/XCUIApplication/NotificationAuthorizationAction``
-- ``XCTest/XCUIApplication/confirmNotificationAuthorization(action:)``
+- ``XCTest/XCUIApplication/confirmNotificationAuthorization(action:timeout:requireAlert:)``
 
 ### Notification Requests
-- ``XCTest/XCUIApplication/assertNotificationDetails(identifier:title:subtitle:body:category:thread:sound:interruption:type:nextTrigger:nextTriggerExistenceTimeout:)``
+- ``XCTest/XCUIApplication/assertNotificationDetails(identifier:title:subtitle:body:category:thread:sound:interruption:type:nextTrigger:nextTriggerPrefix:nextTriggerExistenceTimeout:)``
