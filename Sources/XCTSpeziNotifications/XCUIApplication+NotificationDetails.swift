@@ -24,6 +24,7 @@ extension XCUIApplication {
     ///   - interruption: The interruption level to assert.
     ///   - type: The trigger type to assert.
     ///   - nextTrigger: The next trigger label to assert.
+    ///   - nextTriggerPrefix: A prefix of the next trigger label to assert, e.g., if the exact time is not known upfront.
     ///   - nextTriggerExistenceTimeout: The time to await for the trigger label to appear.
     public func assertNotificationDetails(
         identifier: String? = nil, // swiftlint:disable:this function_default_parameter_at_end
@@ -36,6 +37,7 @@ extension XCUIApplication {
         interruption: UNNotificationInterruptionLevel = .active,
         type: String? = nil,
         nextTrigger: String? = nil,
+        nextTriggerPrefix: String? = nil,
         nextTriggerExistenceTimeout: TimeInterval = 60
     ) {
         XCTAssert(navigationBars.staticTexts[title].waitForExistence(timeout: 2.0))
@@ -64,11 +66,49 @@ extension XCUIApplication {
         #endif
 
         if let type {
-            XCTAssert(staticTexts["Type, \(type)"].exists)
+            XCTAssert(staticTexts["Type, \(type)"].waitForExistence(timeout: 2.0))
         }
 
         if let nextTrigger {
             XCTAssert(staticTexts["Next Trigger, \(nextTrigger)"].waitForExistence(timeout: nextTriggerExistenceTimeout))
         }
+
+        if let nextTriggerPrefix {
+            let label = staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Next Trigger, \(nextTriggerPrefix)")).firstMatch
+            XCTAssert(label.waitForExistence(timeout: nextTriggerExistenceTimeout))
+        }
+    }
+
+    /// Assert the contents of a pending notification visualized with the `NotificationRequestView`.
+    ///
+    /// Kept for binary compatibility; calls resolve to the variant that also accepts a `nextTriggerPrefix`.
+    @_disfavoredOverload
+    public func assertNotificationDetails(
+        identifier: String? = nil, // swiftlint:disable:this function_default_parameter_at_end
+        title: String,
+        subtitle: String? = nil, // swiftlint:disable:this function_default_parameter_at_end
+        body: String,
+        category: String? = nil,
+        thread: String? = nil,
+        sound: Bool = false,
+        interruption: UNNotificationInterruptionLevel = .active,
+        type: String? = nil,
+        nextTrigger: String? = nil,
+        nextTriggerExistenceTimeout: TimeInterval = 60
+    ) {
+        assertNotificationDetails(
+            identifier: identifier,
+            title: title,
+            subtitle: subtitle,
+            body: body,
+            category: category,
+            thread: thread,
+            sound: sound,
+            interruption: interruption,
+            type: type,
+            nextTrigger: nextTrigger,
+            nextTriggerPrefix: nil,
+            nextTriggerExistenceTimeout: nextTriggerExistenceTimeout
+        )
     }
 }

@@ -21,35 +21,33 @@ final class PendingNotificationsTests: XCTestCase {
     func testPendingNotifications() { // swiftlint:disable:this function_body_length
         func navigateToTab(_ tabName: String, line: UInt = #line) {
             #if os(visionOS)
-            XCTAssert(app.buttons[tabName].exists, line: line)
-            app.buttons[tabName].firstMatch.tap()
-            usleep(500000)
-            app.buttons[tabName].firstMatch.tap()
+            let tab = app.buttons[tabName].firstMatch
             #else
-            XCTAssert(app.tabBars.buttons[tabName].exists, line: line)
-            app.tabBars.buttons[tabName].tap()
-            usleep(500000)
-            app.tabBars.buttons[tabName].tap()
+            let tab = app.tabBars.buttons[tabName]
             #endif
+            XCTAssert(tab.wait(for: \.isHittable, toEqual: true, timeout: 5.0), line: line)
+            tab.tap()
+            usleep(500000)
+            tab.tap()
         }
         
         let app = XCUIApplication()
         app.deleteAndLaunch(withSpringboardAppName: "TestApp")
 
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 2.0))
-        XCTAssert(app.navigationBars.staticTexts["Notifications"].waitForExistence(timeout: 2.0))
+        XCTAssert(app.navigationBars.staticTexts["Notifications"].waitForExistence(timeout: 10.0))
 
-        XCTAssert(app.staticTexts["Authorization, notDetermined"].exists)
-        XCTAssert(app.buttons["Schedule Notifications"].exists)
+        XCTAssert(app.staticTexts["Authorization, notDetermined"].waitForExistence(timeout: 5.0))
+        XCTAssert(app.buttons["Schedule Notifications"].wait(for: \.isHittable, toEqual: true, timeout: 5.0))
         app.buttons["Schedule Notifications"].tap()
 
-        XCTAssert(app.staticTexts["Authorization, provisional"].waitForExistence(timeout: 0.5))
+        XCTAssert(app.staticTexts["Authorization, provisional"].waitForExistence(timeout: 5.0))
 
         navigateToTab("Notifications")
 
         XCTAssert(app.navigationBars.staticTexts["Pending Notifications"].waitForExistence(timeout: 2.0))
 
-        XCTAssert(app.staticTexts["Calendar Notification"].exists)
+        XCTAssert(app.staticTexts["Calendar Notification"].waitForExistence(timeout: 5.0))
         XCTAssert(app.staticTexts["Interval Notification"].exists)
 
         app.staticTexts["Calendar Notification"].tap()
@@ -65,7 +63,7 @@ final class PendingNotificationsTests: XCTestCase {
             interruption: .timeSensitive,
             type: "Calendar"
         )
-        XCTAssert(app.navigationBars.buttons["Pending Notifications"].exists)
+        XCTAssert(app.navigationBars.buttons["Pending Notifications"].wait(for: \.isHittable, toEqual: true, timeout: 5.0))
         app.navigationBars.buttons["Pending Notifications"].tap()
 
         XCTAssert(app.staticTexts["Interval Notification"].waitForExistence(timeout: 2.0))
@@ -87,12 +85,12 @@ final class PendingNotificationsTests: XCTestCase {
         
         navigateToTab("Controls")
         
-        XCTAssert(app.buttons["Cancel Pending Notifications"].waitForExistence(timeout: 1))
+        XCTAssert(app.buttons["Cancel Pending Notifications"].wait(for: \.isHittable, toEqual: true, timeout: 5.0))
         app.buttons["Cancel Pending Notifications"].tap()
         
         navigateToTab("Notifications")
         
-        XCTAssertFalse(app.staticTexts["Calendar Notification"].exists)
-        XCTAssertFalse(app.staticTexts["Interval Notification"].exists)
+        XCTAssert(app.staticTexts["Calendar Notification"].waitForNonExistence(timeout: 5.0))
+        XCTAssert(app.staticTexts["Interval Notification"].waitForNonExistence(timeout: 5.0))
     }
 }

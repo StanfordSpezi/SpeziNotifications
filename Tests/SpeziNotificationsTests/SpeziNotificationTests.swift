@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: MIT
 //
 
+@testable import struct Spezi.Configuration
 import protocol Spezi.Module
 import class Spezi.SpeziAppDelegate
-@testable import struct Spezi.Configuration
 @testable import SpeziNotifications
 import SwiftUI
 import UserNotifications
@@ -117,7 +117,7 @@ final class NotificationsTests: XCTestCase {
 
         try await Task.sleep(for: .milliseconds(500)) // allow dispatch of Task above
 
-        let data = try XCTUnwrap("Hello World".data(using: .utf8))
+        let data = Data("Hello World".utf8)
 
 #if os(iOS) || os(visionOS) || os(tvOS)
         delegate.application(UIApplication.shared, didRegisterForRemoteNotificationsWithDeviceToken: data)
