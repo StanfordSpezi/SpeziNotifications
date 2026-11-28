@@ -83,7 +83,6 @@ extension XCUIApplication {
     ///
     /// Kept for binary compatibility; calls resolve to the variant that also accepts a `nextTriggerPrefix`.
     @_disfavoredOverload
-    @_documentation(visibility: internal)
     public func assertNotificationDetails(
         identifier: String? = nil, // swiftlint:disable:this function_default_parameter_at_end
         title: String,
